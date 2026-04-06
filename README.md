@@ -23,6 +23,21 @@
 ![Settings Preview](https://i.ibb.co/rR7mZn32/image.png)
 ![Anchor Preview](https://i.ibb.co/1tkjhZVv/image.png)
 ---
+### структура проекта
+```
+src/
+├── components/
+│   ├── Anchors.jsx   # Логика закладок и DnD
+│   ├── Weather.jsx   # Виджет погоды
+│   ├── Settings.jsx  # Модалка настроек
+│   └── Blobs.jsx     # Анимированный фон
+├── stores/
+│   └── stores.js     # Zustand сторы
+├── themes/
+│   └── generateTheme # Генератор цветовых схем
+└── App.jsx           # Корневой компонент
+```
+---
 ### запуск
 ```bash
   # установить зависимости
