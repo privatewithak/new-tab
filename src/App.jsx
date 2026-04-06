@@ -10,7 +10,7 @@ import { greets, placeholders } from './data/randomArrs'
 import Anchors from './components/Anchors'
 import Settings from './components/Settings'
 import Portal from './util/Portal'
-import { useCreds } from './stores/stores'
+import { useCreds, useQuery } from './stores/stores'
 
 // TODO
 
@@ -18,10 +18,7 @@ import { useCreds } from './stores/stores'
 
 
 
-  const useQuery = create((set) => ({
-    query: '',
-    setQuery: (q) => set({ query: q }),
-  }))
+
 
 
 
