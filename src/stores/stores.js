@@ -90,3 +90,28 @@ const API_KEY = apiKey
   
     }
 }))
+
+export const useShortcuts = create(persist((set) => ({
+  shortcuts: [],
+  addShortcut: (s) =>
+	set((state) => ({
+	  shortcuts: [...state.shortcuts, { ...s, id: crypto.randomUUID() }],
+	})),
+  removeShortcut: (id) =>
+	set((state) => ({
+	  shortcuts: state.shortcuts.filter((s) => s.id !== id),
+	})),
+  updateShortcut: (id, updates) =>
+	set((state) => ({
+	  shortcuts: state.shortcuts.map((s) =>
+		s.id === id ? { ...s, ...updates } : s
+	  ),
+	})),
+		reorderShortcut: (from, to) => set((state) => {
+		const items = [...state.shortcuts]
+		const [moved] = items.splice(from, 1)
+		items.splice(to, 0, moved)
+		return { shortcuts: items }
+
+	  })
+})))
