@@ -28,7 +28,7 @@
 ```
 src/
 ├── data/
-│   ├── randomArrs    # случайные приветствия/фразы на search bar
+│   └── randomArrs    # случайные приветствия/фразы на search bar
 ├── components/
 │   ├── Anchors.jsx   # Логика закладок и DnD
 │   ├── Weather.jsx   # Виджет погоды
@@ -39,7 +39,7 @@ src/
 ├── themes/
 │   └── generateTheme # Генератор цветовых схем
 ├── utils/
-│   └── Modal.jsx     # генератор модалок
+│   ├── Modal.jsx     # генератор модалок
 │   └── Portal.jsx    # wrapper над React порталами
 └── App.jsx           # Корневой компонент
 ```
