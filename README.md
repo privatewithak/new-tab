@@ -19,7 +19,7 @@
 ---
 ### небольшой превью
 ![Extension Preview](https://i.ibb.co/R4D4Drf7/2026-04-07-010054.png)
-![Settings Preview](https://i.ibb.co/dJp8tZ7F/image.png)
+![Settings Preview](https://i.ibb.co/rR7mZn32/image.png)
 ![Anchor Preview](https://i.ibb.co/1tkjhZVv/image.png)
 ---
 ### запуск
