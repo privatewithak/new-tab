@@ -6,8 +6,8 @@
 ![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)
 ![Lucide](https://img.shields.io/badge/Lucide-F56565?style=for-the-badge&logo=lucide&logoColor=white)
 
-## мне не понравилась стандартная новая вкладка в chrome, так что я сделал свой chrome extension на react.
-это является минималистичной стартовой страницой для Chrome с кастомизируемыми ярлыками, виджетом погоды и эстетикой glassmorphism
+## это является минималистичной стартовой страницой для Chrome с кастомизируемыми ярлыками, виджетом погоды и эстетикой glassmorphism
+ мне не понравилась стандартная новая вкладка в chrome, так что я сделал свой chrome extension на react.
 
 ### что умеет
 - ярлыки (быстрый доступ к сайтам, есть drag-and-drop (перетаскивание))
