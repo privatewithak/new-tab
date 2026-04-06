@@ -14,8 +14,8 @@
 - поиск через google
 ---
 ### требования
-> Node.js 18+
-> OpenWeatherMap API ключ
+> -/ Node.js 18+
+> -/ OpenWeatherMap API ключ
 ---
 ### небольшой превью
 ![Extension Preview](https://i.ibb.co/R4D4Drf7/2026-04-07-010054.png)
