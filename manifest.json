@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "privatewithak — New Tab",
+  "version": "1.0.0",
+  "description": "Кастомная страница новой вкладки",
+
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+
+  "permissions": [
+    "storage"
+  ],
+
+  "action": {
+    "default_title": "New Tab"
+  },
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  }
+}
