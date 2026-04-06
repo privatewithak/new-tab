@@ -6,7 +6,37 @@
 ![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)
 ![Lucide](https://img.shields.io/badge/Lucide-F56565?style=for-the-badge&logo=lucide&logoColor=white)
 
-## мне не понравилась стандартная новая вкладка в chrome, так что я сделал свою
+## это является минималистичной стартовой страницой для Chrome с кастомизируемыми ярлыками, виджетом погоды и эстетикой glassmorphism
+ мне не понравилась стандартная новая вкладка в chrome, так что я сделал свой chrome extension на react.
+
+### что умеет
+- ярлыки (быстрый доступ к сайтам, есть drag-and-drop (перетаскивание))
+- показ погоды (по геолокации или вручную по координатам)
+- поиск через google
+---
+### требования
+ - Node.js 18+
+ - OpenWeatherMap API ключ
+---
+### preview
+![Extension Preview](https://i.ibb.co/R4D4Drf7/2026-04-07-010054.png)
+![Settings Preview](https://i.ibb.co/rR7mZn32/image.png)
+![Anchor Preview](https://i.ibb.co/1tkjhZVv/image.png)
+---
+### структура проекта
+```
+src/
+├── components/
+│   ├── Anchors.jsx   # Логика закладок и DnD
+│   ├── Weather.jsx   # Виджет погоды
+│   ├── Settings.jsx  # Модалка настроек
+│   └── Blobs.jsx     # Анимированный фон
+├── stores/
+│   └── stores.js     # Zustand сторы
+├── themes/
+│   └── generateTheme # Генератор цветовых схем
+└── App.jsx           # Корневой компонент
+```
 ---
 ### запуск
 ```bash
@@ -17,7 +47,6 @@
   # сборка
   npm run build
 ```
-> Нужен Node.js 18+
 ---
 ### настройка
 перед успешным использованием нужно совершить эти шаги:
@@ -25,6 +54,8 @@
  2. включить режим разработчика в верхнем правом углу
  3. собрать расширение (выполнить `npm run build`)
  4. нажать загрузить упакованное расширение
- 5. выбрать папку dist в корне проекта
+ 5. выбрать папку dist в корне проекта, нажать сохранить
+ 6. открыть новую вкладку, шестерёнку в верхнем правом углу и вписать API ключ OpenWeatherMap
+ 7. дать доступ к геолокации или ввести координаты самому
 ---
 удачного использования!
