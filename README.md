@@ -7,7 +7,7 @@
 ![Lucide](https://img.shields.io/badge/Lucide-F56565?style=for-the-badge&logo=lucide&logoColor=white)
 
 ## мне не понравилась стандартная новая вкладка в chrome, так что я сделал свой chrome extension на react.
----
+
 ### что умеет
 - ярлыки (быстрый доступ к сайтам)
 - показ погоды (по геолокации или вручную по координатам)
@@ -17,7 +17,7 @@
  - Node.js 18+
  - OpenWeatherMap API ключ
 ---
-### небольшой превью
+### preview
 ![Extension Preview](https://i.ibb.co/R4D4Drf7/2026-04-07-010054.png)
 ![Settings Preview](https://i.ibb.co/rR7mZn32/image.png)
 ![Anchor Preview](https://i.ibb.co/1tkjhZVv/image.png)
