@@ -5,14 +5,17 @@
 ![Zustand](https://img.shields.io/badge/Zustand-443E38?style=for-the-badge&logo=react&logoColor=white)
 ![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)
 ![Lucide](https://img.shields.io/badge/Lucide-F56565?style=for-the-badge&logo=lucide&logoColor=white)
+![DnD Kit](https://img.shields.io/badge/dnd_kit-FF4785?style=for-the-badge&logo=react&logoColor=white)
 
-## это является минималистичной стартовой страницой для Chrome с кастомизируемыми ярлыками, виджетом погоды и эстетикой glassmorphism
+## минималистичная стартовая страница для Chrome с кастомизируемыми ярлыками, виджетом погоды и эстетикой glassmorphism
  мне не понравилась стандартная новая вкладка в chrome, так что я сделал свой chrome extension на react.
 
 ### что умеет
 - ярлыки (быстрый доступ к сайтам, есть drag-and-drop (перетаскивание))
 - показ погоды (по геолокации или вручную по координатам)
 - поиск через google
+- рандомные цветовые схемы (темы) при загрузке
+- 
 ---
 ### требования
  - Node.js 18+
@@ -26,6 +29,8 @@
 ### структура проекта
 ```
 src/
+├── data/
+│   └── randomArrs    # случайные приветствия/фразы на search bar
 ├── components/
 │   ├── Anchors.jsx   # Логика закладок и DnD
 │   ├── Weather.jsx   # Виджет погоды
@@ -35,6 +40,9 @@ src/
 │   └── stores.js     # Zustand сторы
 ├── themes/
 │   └── generateTheme # Генератор цветовых схем
+├── util/
+│   ├── Modal.jsx     # генератор модалок
+│   └── Portal.jsx    # wrapper над React порталами
 └── App.jsx           # Корневой компонент
 ```
 ---
