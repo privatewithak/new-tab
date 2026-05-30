@@ -9,13 +9,16 @@ export const useCreds = create(
 			manualLon: '',
 			coords: null,
 			apiKey: '',
+      weather: true,
 			setUsername: (name) => set({username: name}),
 			setLocationMode: (mode) => set({locationMode: mode}),
 			setManualCoords: (lat, lon) => set({manualLat: lat, manualLon: lon, coords: {lat: parseFloat(lat), lon: parseFloat(lon)}}),
 			setAutoCoords: (lat, lon) => set({ coords: { lat, lon } }),
-			setAPIKey: (key) => set({apiKey: key})
+			setAPIKey: (key) => set({apiKey: key}),
+      setWeather: (mode) => set({weather: mode})
 		}), {name: 'newtab-settings'})
 	)
+
 
 export const useQuery = create((set) => ({
     query: '',
@@ -49,7 +52,7 @@ export const useWeather = create((set) => ({
   set({ loading: false, error: "Нет API ключа" })
   return
 } else {
-   set({error: null, loading: false})
+   set({ error: null, loading: false })
 }
 
 const API_KEY = apiKey

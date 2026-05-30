@@ -3,7 +3,7 @@ import { create } from 'zustand'
 import { AnimatePresence, motion } from 'framer-motion'
 import { COLOR_RGB, generateTheme } from './themes/generateTheme'
 import Typewriter from 'typewriter-effect'
-import { Search } from 'lucide-react'
+import { Search, BotMessageSquare } from 'lucide-react'
 import Blobs from './components/Blobs' 
 import Weather from './components/Weather'
 import { greets, placeholders } from './data/randomArrs'
@@ -11,7 +11,6 @@ import Anchors from './components/Anchors'
 import Settings from './components/Settings'
 import Portal from './util/Portal'
 import { useCreds, useQuery } from './stores/stores'
-
 // TODO
 
 // история поиска
@@ -26,7 +25,8 @@ import { useCreds, useQuery } from './stores/stores'
 const App = () => {
   const query = useQuery((state) => state.query)
   const setQuery = useQuery((state) => state.setQuery)
-  const {username} = useCreds()
+  const {username, weather} = useCreds()
+  
 
   const handleSearch = (ev) => {
     ev.preventDefault();
@@ -45,7 +45,7 @@ const App = () => {
   }, [])
 
   return (
-    <div className='bg-slate-950 h-screen w-screen relative overflow-hidden'>
+    <div className='bg-slate-950 h-screen w-screen relative'>
       
         <Blobs />
 
@@ -57,7 +57,8 @@ const App = () => {
     <Settings />
   </div>
 </Portal>
-          <Weather theme={theme}/>
+<AnimatePresence>
+  {weather ? <Weather key={String(weather)} theme={theme} /> : null}</AnimatePresence>
           <div>
             <h1>
               <Typewriter
@@ -84,15 +85,22 @@ const App = () => {
                 }}
               />
             </h1></div>
-          <AnimatePresence mode='wait'>
+          <AnimatePresence key={1} mode='wait'>
+
+            
+
           
-            <motion.div initial={{ opacity: 0, y: -12, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }} exit={{opacity: 0.2, y: 40, scale: 0.95}}
+            <motion.div initial={{ opacity: 0, y: -12, scale: 0.96, x: 100 }}
+              animate={{ opacity: 1, y: 0, scale: 1, x: 0 }} exit={{opacity: 0.2, y: 40, scale: 0.95}}
               transition={{
                 duration: 0.4,
                 ease: [0.25, 0.46, 0.45, 0.94],
                 opacity: { duration: 0.35 },
+                type: 'spring',
+                stiffness: 200,
+                damping: 48
               }} className={`min-w-4/10 min-h-2/20 bg-white/5 rounded-3xl backdrop-blur-xl border ${theme.cardHalo} py-4 flex items-center justify-center`} style={{ boxShadow: theme.cardShadow }}>
+                
               <motion.div whileHover={{scale: 1.02, y: -3}} className={`w-8/10 bg-white/5 rounded-3xl backdrop-blur-xl border border-white/10 px-5 py-3 flex items-center gap-3`}>
                 <div>
                   <Search size={20} className='text-white/50 shrink-0' />
@@ -100,8 +108,11 @@ const App = () => {
                 <form className='contents' onSubmit={handleSearch}>
                   <input className={`w-full bg-transparent outline-none ${theme.textSoft} placeholder:${theme.textAccent} text-base`} placeholder={`${placeholders[Math.floor(Math.random() * placeholders.length)]}`} value={query} onChange={(e) => setQuery(e.target.value)} />
                 </form>
+              
               </motion.div>
+
             </motion.div>
+
             
              
               <motion.div exit={{opacity: 0, y: 10}}>

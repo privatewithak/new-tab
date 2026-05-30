@@ -22,6 +22,7 @@ export const generateTheme = (color) => {
     border: `border-${color}-400/70`,
     textAccent: `text-${color}-300`,
     textSoft: `text-${color}-200/80`,
+    fill: `bg-${color}-500`
   };
 
   base.buttonBg = `relative bg-gradient-to-b from-${color}-600 to-${color}-700 ${textColor} shadow-[0_4px_20px_rgba(${rgb},0.35)] before:absolute before:inset-0 before:bg-gradient-to-b before:from-${color}-500/30 before:to-${color}-900/50 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300 active:shadow-[0_2px_12px_rgba(${rgb},0.45)] active:translate-y-0.5 after:absolute after:inset-0 after:bg-gradient-to-r after:from-transparent after:via-${color}-300/25 after:to-transparent after:opacity-0 hover:after:opacity-100 after:transition-opacity after:duration-500 after:animate-shimmer`;

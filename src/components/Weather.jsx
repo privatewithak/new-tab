@@ -61,7 +61,7 @@ function Weather({theme}) {
    console.log(weather)
 
    return (
-      <div className={`absolute top-10 w-3/20 h-4/20 bg-white/5 rounded-3xl backdrop-blur-xl border ${theme.cardHalo} py-4 flex items-center justify-center`} style={{ boxShadow: theme.cardShadow }}>
+      <motion.div className={`absolute top-10 w-3/20 h-4/20 bg-white/5 rounded-3xl backdrop-blur-xl border ${theme.cardHalo} py-4 flex items-center justify-center`} style={{ boxShadow: theme.cardShadow }} initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} exit={{ x: 100, opacity: 0 }} transition={{ type: "spring", stiffness: 280, damping: 48 }}>
          <AnimatePresence mode='wait'>
          {loading && (
             <motion.div
@@ -126,7 +126,7 @@ function Weather({theme}) {
 
          </AnimatePresence>
 
-      </div>
+      </motion.div>
    )
 }
 

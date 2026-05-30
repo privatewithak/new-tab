@@ -201,10 +201,10 @@ function AnchorCard({ shortcut, theme, onEdit, onDelete }) {
     <div ref={setNodeRef} style={style} {...attributes}>
       <motion.div
         className="flex flex-col items-center gap-2 group relative"
-        initial={{ opacity: 0, scale: 0.7 }}
-        animate={{ opacity: 1, scale: 1 }}
+        initial={{ opacity: 0, scale: 0.7, y: 100 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.7 }}
-        transition={{ type: 'spring', damping: 18, stiffness: 260 }}
+        transition={{ type: 'spring', damping: 54, stiffness: 200 }}
         onHoverStart={() => setHovered(true)}
         onHoverEnd={() => setHovered(false)}
       >
@@ -360,7 +360,7 @@ function Anchors({ theme = {}, }) {
               theme={theme}
               onEdit={openEdit}
               onDelete={removeShortcut}
-              
+
             />
           ))}
         </AnimatePresence>

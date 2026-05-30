@@ -1,6 +1,6 @@
 import { useCreds } from "../stores/stores";
 import { useState, useEffect } from 'react';
-import { Settings as SettingsIcon, User, MapPin, Key, Navigation, Map, Check, Eye, EyeOff } from 'lucide-react';
+import { Settings as SettingsIcon, User, MapPin, MapPinned, Key, Navigation, Check, Eye, EyeOff, Thermometer } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Modal from "../util/Modal";
 
@@ -27,6 +27,37 @@ function Input({ className = '', ...props }) {
     );
 }
 
+function Switch({ value, onChange, label, disabled = false }) {
+    return (
+        <div className="flex flex-row items-center justify-between gap-4">
+            <label
+                htmlFor={label}
+                className="text-sm select-none cursor-pointer"
+                onClick={() => !disabled && onChange(!value)}
+            >
+                {label}
+            </label>
+            <motion.button
+                id={label}
+                role="switch"
+                aria-checked={value}
+                aria-label={label}
+                disabled={disabled}
+                onClick={() => onChange(!value)}
+                className={`relative w-14 h-7 border border-white/10 rounded-full cursor-pointer overflow-hidden transition-colors duration-200
+                    ${value ? 'bg-neutral-600' : 'bg-neutral-900'}
+                    ${disabled ? 'opacity-40 cursor-not-allowed' : ''}
+                `}
+            >
+                <motion.div
+                    className="absolute top-1/2 -translate-y-1/2 left-1 w-5 h-5 bg-white rounded-full shadow-sm"
+                    animate={{ x: value ? '-0.1rem' : '1.6rem' }}
+                    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                />
+            </motion.button>
+        </div>
+    )
+}
 
 function SegmentedControl({ value, onChange, options }) {
     return (
@@ -85,7 +116,7 @@ export default function Settings() {
         username, setUsername,
         locationMode, setLocationMode,
         manualLat, manualLon, setManualCoords,
-        apiKey, setAPIKey,
+        apiKey, setAPIKey, weather, setWeather
     } = useCreds();
 
    
@@ -95,6 +126,7 @@ export default function Settings() {
         manualLat: '',
         manualLon: '',
         apiKey: '',
+        weather,
     });
     const [showKey, setShowKey] = useState(false);
     const [saved, setSaved] = useState(false);
@@ -102,7 +134,7 @@ export default function Settings() {
     
     useEffect(() => {
         if (open) {
-            setDraft({ username, locationMode, manualLat, manualLon, apiKey });
+            setDraft({ username, locationMode, manualLat, manualLon, apiKey, weather });
             setShowKey(false);
             setSaved(false);
         }
@@ -115,10 +147,11 @@ export default function Settings() {
         if (draft.locationMode === 'manual') {
             setManualCoords(draft.manualLat, draft.manualLon);
         }
+        setWeather(draft.weather)
         setSaved(true);
         setTimeout(() => setSaved(false), 2000);
 
-        window.location.reload()
+        
     }
 
     const patch = (key) => (e) => setDraft(d => ({ ...d, [key]: e.target.value }));
@@ -153,9 +186,9 @@ export default function Settings() {
                     </div>
 
                     
-                    <div className="flex flex-col gap-5 pt-5">
+                    <div className="flex flex-col pt-5">
 
-                        
+                        <div className="flex flex-col gap-5">
                         <Field label="Имя пользователя" icon={User}>
                             <Input
                                 value={draft.username}
@@ -164,7 +197,15 @@ export default function Settings() {
                             />
                         </Field>
 
-                        
+                        <Field label={'Виджет'} icon={Thermometer}>
+                            <Switch label={'Включить виджет погоды'} value={draft.weather} onChange={(v) => setDraft(d => ({...d, weather: v}))}/>
+                        </Field>
+                        </div>
+                        <AnimatePresence>
+                        {draft.weather ?
+                        <>
+                        <motion.div initial={{opacity: 0, height: 0}} animate={{opacity: 1, height: 'auto'}} exit={{opacity: 0, height: 0}} className="overflow-hidden">
+                            <div className="flex flex-col gap-5 pt-5">
                         <Field label="API ключ" icon={Key}>
                             <div className="relative">
                                 <Input
@@ -186,6 +227,8 @@ export default function Settings() {
                             <p className="text-xs text-gray-600 ml-1">Использует <a href="https://openweathermap.org/" rel="noopener noreferrer" target="_blank" className="underline">OpenWeatherMap API</a></p>
                         </Field>
 
+                        
+
                        
                         <Field label="Геолокация" icon={MapPin}>
                             <SegmentedControl
@@ -193,12 +236,15 @@ export default function Settings() {
                                 onChange={(v) => setDraft(d => ({ ...d, locationMode: v }))}
                                 options={[
                                     { value: 'auto', label: 'Авто', icon: Navigation },
-                                    { value: 'manual', label: 'Вручную', icon: Map },
+                                    { value: 'manual', label: 'Вручную', icon: MapPinned },
                                 ]}
                             />
                         </Field>
-
+                        </div>
+                        </motion.div>
                         
+                        </> : null }
+                        </AnimatePresence>
                         <AnimatePresence initial={false}>
                             {draft.locationMode === 'manual' && (
                                 <motion.div
