@@ -240,12 +240,11 @@ export default function Settings() {
                                 ]}
                             />
                         </Field>
+
+
                         </div>
-                        </motion.div>
-                        
-                        </> : null }
-                        </AnimatePresence>
-                        <AnimatePresence initial={false}>
+
+                                                        <AnimatePresence initial={false}>
                             {draft.locationMode === 'manual' && (
                                 <motion.div
                                     key="manual-coords"
@@ -255,7 +254,7 @@ export default function Settings() {
                                     transition={{ type: 'spring', stiffness: 300, damping: 28 }}
                                     className="overflow-hidden"
                                 >
-                                    <div className="flex gap-2 pt-0">
+                                    <div className="flex gap-2 pt-2">
                                         <Input
                                             value={draft.manualLat}
                                             onChange={patch('manualLat')}
@@ -272,6 +271,13 @@ export default function Settings() {
                                 </motion.div>
                             )}
                         </AnimatePresence>
+                        </motion.div>
+
+                                            
+                        
+                        </> : null }
+                        </AnimatePresence>
+
 
                     </div>
 
