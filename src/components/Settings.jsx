@@ -119,7 +119,6 @@ export default function Settings() {
         apiKey, setAPIKey, weather, setWeather
     } = useCreds();
 
-   
     const [draft, setDraft] = useState({
         username: '',
         locationMode: 'auto',
@@ -131,7 +130,6 @@ export default function Settings() {
     const [showKey, setShowKey] = useState(false);
     const [saved, setSaved] = useState(false);
 
-    
     useEffect(() => {
         if (open) {
             setDraft({ username, locationMode, manualLat, manualLon, apiKey, weather });
@@ -147,11 +145,9 @@ export default function Settings() {
         if (draft.locationMode === 'manual') {
             setManualCoords(draft.manualLat, draft.manualLon);
         }
-        setWeather(draft.weather)
+        setWeather(draft.weather);
         setSaved(true);
         setTimeout(() => setSaved(false), 2000);
-
-        
     }
 
     const patch = (key) => (e) => setDraft(d => ({ ...d, [key]: e.target.value }));
@@ -175,8 +171,6 @@ export default function Settings() {
 
             <Modal open={open} onClose={() => setOpen(false)}>
                 <div className="text-white flex flex-col gap-0">
-
-                    
                     <div className="flex items-center justify-between pb-4 border-b border-white/8">
                         <div className="flex items-center gap-2">
                             <SettingsIcon size={14} className="text-white/40" />
@@ -185,103 +179,110 @@ export default function Settings() {
                         <SavedToast visible={saved} />
                     </div>
 
-                    
                     <div className="flex flex-col pt-5">
-
                         <div className="flex flex-col gap-5">
-                        <Field label="Имя пользователя" icon={User}>
-                            <Input
-                                value={draft.username}
-                                onChange={patch('username')}
-                                placeholder="Как тебя звать?"
-                            />
-                        </Field>
-
-                        <Field label={'Виджет'} icon={Thermometer}>
-                            <Switch label={'Включить виджет погоды'} value={draft.weather} onChange={(v) => setDraft(d => ({...d, weather: v}))}/>
-                        </Field>
-                        </div>
-                        <AnimatePresence>
-                        {draft.weather ?
-                        <>
-                        <motion.div initial={{opacity: 0, height: 0}} animate={{opacity: 1, height: 'auto'}} exit={{opacity: 0, height: 0}} className="overflow-hidden">
-                            <div className="flex flex-col gap-5 pt-5">
-                        <Field label="API ключ" icon={Key}>
-                            <div className="relative">
+                            <Field label="Имя пользователя" icon={User}>
                                 <Input
-                                    type={showKey ? 'text' : 'password'}
-                                    value={draft.apiKey}
-                                    onChange={patch('apiKey')}
-                                    placeholder="Ваш API ключ..."
-                                    className="pr-10"
+                                    value={draft.username}
+                                    onChange={patch('username')}
+                                    placeholder="Как тебя звать?"
                                 />
-                                <button
-                                    type="button"
-                                    onClick={() => setShowKey(v => !v)}
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-white/25 hover:text-white/60 transition-colors cursor-pointer"
-                                >
-                                    {showKey ? <EyeOff size={14} /> : <Eye size={14} />}
-                                </button>
-                                
-                            </div>
-                            <p className="text-xs text-gray-600 ml-1">Использует <a href="https://openweathermap.org/" rel="noopener noreferrer" target="_blank" className="underline">OpenWeatherMap API</a></p>
-                        </Field>
+                            </Field>
 
-                        
-
-                       
-                        <Field label="Геолокация" icon={MapPin}>
-                            <SegmentedControl
-                                value={draft.locationMode}
-                                onChange={(v) => setDraft(d => ({ ...d, locationMode: v }))}
-                                options={[
-                                    { value: 'auto', label: 'Авто', icon: Navigation },
-                                    { value: 'manual', label: 'Вручную', icon: MapPinned },
-                                ]}
-                            />
-                        </Field>
-
-
+                            <Field label={'Виджет'} icon={Thermometer}>
+                                <Switch 
+                                    label={'Включить виджет погоды'} 
+                                    value={draft.weather} 
+                                    onChange={(v) => setDraft(d => ({...d, weather: v}))}
+                                />
+                            </Field>
                         </div>
 
-                                                        <AnimatePresence initial={false}>
-                            {draft.locationMode === 'manual' && (
-                                <motion.div
-                                    key="manual-coords"
-                                    initial={{ opacity: 0, height: 0 }}
-                                    animate={{ opacity: 1, height: 'auto' }}
-                                    exit={{ opacity: 0, height: 0 }}
-                                    transition={{ type: 'spring', stiffness: 300, damping: 28 }}
-                                    className="overflow-hidden"
-                                >
-                                    <div className="flex gap-2 pt-2">
-                                        <Input
-                                            value={draft.manualLat}
-                                            onChange={patch('manualLat')}
-                                            placeholder="Широта (55.75)"
-                                            type="number"
-                                        />
-                                        <Input
-                                            value={draft.manualLon}
-                                            onChange={patch('manualLon')}
-                                            placeholder="Долгота (37.62)"
-                                            type="number"
-                                        />
-                                    </div>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                        </motion.div>
+                      <AnimatePresence initial={false}>
+    {draft.weather && (
+        <motion.div
+            key="weather-panel"
+            initial={{ opacity: 0, maxHeight: 0 }}
+            animate={{ opacity: 1, maxHeight: 600 }}
+            exit={{ opacity: 0, maxHeight: 0 }}
+            transition={{ 
+                maxHeight: { duration: 0.35, ease: [0.4, 0, 0.2, 1] },
+                opacity: { duration: 0.25 }
+            }}
+            className="overflow-hidden"
+            style={{ willChange: 'max-height, opacity' }}
+        >
+            <div className="flex flex-col gap-5 pt-5">
+                <Field label="API ключ" icon={Key}>
+                    <div className="relative">
+                        <Input
+                            type={showKey ? 'text' : 'password'}
+                            value={draft.apiKey}
+                            onChange={patch('apiKey')}
+                            placeholder="Ваш API ключ..."
+                            className="pr-10"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowKey(v => !v)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-white/25 hover:text-white/60 transition-colors cursor-pointer"
+                        >
+                            {showKey ? <EyeOff size={14} /> : <Eye size={14} />}
+                        </button>
+                    </div>
+                    <p className="text-xs text-gray-600 ml-1">
+                        Использует <a href="https://openweathermap.org/" rel="noopener noreferrer" target="_blank" className="underline">OpenWeatherMap API</a>
+                    </p>
+                </Field>
 
-                                            
-                        
-                        </> : null }
-                        </AnimatePresence>
+                <Field label="Геолокация" icon={MapPin}>
+                    <SegmentedControl
+                        value={draft.locationMode}
+                        onChange={(v) => setDraft(d => ({ ...d, locationMode: v }))}
+                        options={[
+                            { value: 'auto', label: 'Авто', icon: Navigation },
+                            { value: 'manual', label: 'Вручную', icon: MapPinned },
+                        ]}
+                    />
+                </Field>
+            </div>
 
-
+            <AnimatePresence initial={false}>
+                {draft.locationMode === 'manual' && (
+                    <motion.div
+                        key="manual-coords"
+                        initial={{ opacity: 0, maxHeight: 0 }}
+                        animate={{ opacity: 1, maxHeight: 120 }}
+                        exit={{ opacity: 0, maxHeight: 0 }}
+                        transition={{ 
+                            maxHeight: { duration: 0.3, ease: [0.4, 0, 0.2, 1] },
+                            opacity: { duration: 0.2 }
+                        }}
+                        className="overflow-hidden"
+                        style={{ willChange: 'max-height, opacity' }}
+                    >
+                        <div className="flex gap-2 pt-2">
+                            <Input
+                                value={draft.manualLat}
+                                onChange={patch('manualLat')}
+                                placeholder="Широта (55.75)"
+                                type="number"
+                            />
+                            <Input
+                                value={draft.manualLon}
+                                onChange={patch('manualLon')}
+                                placeholder="Долгота (37.62)"
+                                type="number"
+                            />
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </motion.div>
+    )}
+</AnimatePresence>
                     </div>
 
-                 
                     <div className="pt-5 flex justify-end gap-2 border-t border-white/8 mt-5">
                         <motion.button
                             type="button"
