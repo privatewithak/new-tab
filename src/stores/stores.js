@@ -10,6 +10,8 @@ export const useCreds = create(
 			coords: null,
 			apiKey: '',
       weather: true,
+      searchHistory: [],
+      setSearchHistory: (arr) => set({searchHistory: arr}),
 			setUsername: (name) => set({username: name}),
 			setLocationMode: (mode) => set({locationMode: mode}),
 			setManualCoords: (lat, lon) => set({manualLat: lat, manualLon: lon, coords: {lat: parseFloat(lat), lon: parseFloat(lon)}}),
@@ -118,3 +120,22 @@ export const useShortcuts = create(persist((set) => ({
 
 	  })
 })))
+
+export const useSearchHistory = create(
+  persist(
+    (set) => ({
+      history: [],
+      isActive: false,
+      push: (q) => {
+        const trimmed = q.trim()
+        if (!trimmed) return
+        set((s) => ({
+          history: [trimmed, ...s.history.filter((h) => h !== trimmed)].slice(0, 8),
+        }))
+      },
+      remove: (q) => set((s) => ({ history: s.history.filter((h) => h !== q) })),
+      clear: () => set({ history: [] }),
+    }),
+    { name: 'search-history' }
+  )
+)

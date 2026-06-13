@@ -3,14 +3,14 @@ import { create } from 'zustand'
 import { AnimatePresence, motion } from 'framer-motion'
 import { COLOR_RGB, generateTheme } from './themes/generateTheme'
 import Typewriter from 'typewriter-effect'
-import { Search, BotMessageSquare } from 'lucide-react'
+import { Search, BotMessageSquare, Clock, X } from 'lucide-react'
 import Blobs from './components/Blobs' 
 import Weather from './components/Weather'
 import { greets, placeholders } from './data/randomArrs'
 import Anchors from './components/Anchors'
 import Settings from './components/Settings'
 import Portal from './util/Portal'
-import { useCreds, useQuery } from './stores/stores'
+import { useCreds, useQuery, useSearchHistory } from './stores/stores'
 // TODO
 
 // история поиска
@@ -25,13 +25,17 @@ import { useCreds, useQuery } from './stores/stores'
 const App = () => {
   const query = useQuery((state) => state.query)
   const setQuery = useQuery((state) => state.setQuery)
-  const {username, weather} = useCreds()
-  
+  const { username, weather } = useCreds()
+  const { push } = useSearchHistory()
+  const [showHistory, setShowHistory] = useState(false)
 
   const handleSearch = (ev) => {
     ev.preventDefault();
     
-   if (query.trim()) window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_self');
+   if (query.trim()) { 
+    push(query) 
+    window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_self');
+  }
   }
 
   const [theme, setTheme] = useState({})
@@ -106,7 +110,7 @@ const App = () => {
                   <Search size={20} className='text-white/50 shrink-0' />
                 </div>
                 <form className='contents' onSubmit={handleSearch}>
-                  <input className={`w-full bg-transparent outline-none ${theme.textSoft} placeholder:${theme.textAccent} text-base`} placeholder={`${placeholders[Math.floor(Math.random() * placeholders.length)]}`} value={query} onChange={(e) => setQuery(e.target.value)} />
+                  <input className={`w-full bg-transparent outline-none ${theme.textSoft} placeholder:${theme.textAccent} text-base`} placeholder={`${placeholders[Math.floor(Math.random() * placeholders.length)]}`} value={query} onChange={(e) => setQuery(e.target.value)}  />
                 </form>
               
               </motion.div>
